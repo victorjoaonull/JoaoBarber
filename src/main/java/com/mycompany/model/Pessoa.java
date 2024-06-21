@@ -15,7 +15,7 @@ public class Pessoa {
     @Column(name="SOBRENOME")
     private String sobrenome;
     @Column(name="CPF")
-    private int cpf;
+    private long cpf;
     @Column(name="NASCIMENTO")
     private String nascimento;
     @Column(name="SENHA")
@@ -23,7 +23,7 @@ public class Pessoa {
     @Column(name="SEXO")
     private String sexo;
     @Column(name="CELULAR")
-    private int celular;
+    private long celular;
     @Column(name="EMAIL")
     private String email;
 
@@ -35,7 +35,7 @@ public class Pessoa {
         return sobrenome;
     }
 
-    public int getCpf() {
+    public long getCpf() {
         return cpf;
     }
 
@@ -51,7 +51,7 @@ public class Pessoa {
         return sexo;
     }
 
-    public int getCelular() {
+    public long getCelular() {
         return celular;
     }
 
@@ -67,7 +67,7 @@ public class Pessoa {
         this.sobrenome = sobrenome;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(long cpf) {
         this.cpf = cpf;
     }
 
@@ -83,7 +83,7 @@ public class Pessoa {
         this.sexo = sexo;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(long celular) {
         this.celular = celular;
     }
 

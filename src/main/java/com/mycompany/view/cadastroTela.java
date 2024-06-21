@@ -229,9 +229,7 @@ public class cadastroTela extends javax.swing.JFrame {
         Pessoa registerPerson = new Pessoa();
         String name = textName.getText();
         String surname = textSurname.getText();
-        String cpf = textCPF.getText();
         String sexo = textSexo.getSelectedItem().toString();
-        String tel = textTel.getText();
         String nasc = textNasc.getText();
         String email = textEmail.getText();
         String password = CriptoMD5.getMD5(textPassword.getText());
@@ -253,9 +251,9 @@ public class cadastroTela extends javax.swing.JFrame {
         
         registerPerson.setNome(name);
         registerPerson.setSobrenome(surname);
-        registerPerson.setCpf(Integer.parseInt(cpf));
+        registerPerson.setCpf(Long.parseLong(textCPF.getText()));
         registerPerson.setSexo(sexo);
-        registerPerson.setCelular(Integer.parseInt(tel));
+        registerPerson.setCelular(Long.parseLong(textTel.getText()));
         registerPerson.setNascimento(nasc);
         PessoaDAO.registerUserDAO(registerPerson);
         
