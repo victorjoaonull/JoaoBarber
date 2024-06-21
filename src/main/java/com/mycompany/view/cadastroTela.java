@@ -4,6 +4,7 @@
  */
 package com.mycompany.view;
 
+import com.mycompany.controller.CriptoMD5;
 import com.mycompany.controller.PessoaDAO;
 import com.mycompany.model.Pessoa;
 import javax.swing.JOptionPane;
@@ -233,17 +234,21 @@ public class cadastroTela extends javax.swing.JFrame {
         String tel = textTel.getText();
         String nasc = textNasc.getText();
         String email = textEmail.getText();
-        String password = textPassword.getText();
-        String confirmPassword = textConfirmPassword.getText();
+        String password = CriptoMD5.getMD5(textPassword.getText());
+        String confirmPassword = CriptoMD5.getMD5(textConfirmPassword.getText());
         String confirmEmail = textEmail.getText();
         //verifica se emails e senha são iguais
         
         if(email.equals(confirmEmail)){
             registerPerson.setEmail(email);
-        }    
+        } else {
+            JOptionPane.showMessageDialog(null, "Os emails não coincidem");
+        } 
         
         if(password.equals(confirmPassword)){
             registerPerson.setSenha(password);
+        } else {
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem");
         }
         
         registerPerson.setNome(name);

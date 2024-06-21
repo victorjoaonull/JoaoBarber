@@ -1,5 +1,10 @@
 package com.mycompany.view;
 
+import com.mycompany.controller.CriptoMD5;
+import com.mycompany.controller.PessoaDAO;
+import com.mycompany.model.Pessoa;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -24,10 +29,10 @@ public class loginTela extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         buttonLogin = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        textLogin = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        textPassword = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -100,6 +105,11 @@ public class loginTela extends javax.swing.JFrame {
         );
 
         buttonLogin.setText("Acessar");
+        buttonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoginActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Lembrar");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -135,11 +145,11 @@ public class loginTela extends javax.swing.JFrame {
                                     .addComponent(jCheckBox1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1))
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(39, 39, 39))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3))
                             .addContainerGap()))
@@ -156,11 +166,11 @@ public class loginTela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
@@ -181,6 +191,22 @@ public class loginTela extends javax.swing.JFrame {
         cadastroTela cadastro = new cadastroTela();
         cadastro.setVisible(true);
     }//GEN-LAST:event_buttonCreateAccActionPerformed
+
+    private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
+        try{
+        Pessoa p = null; 
+        p = PessoaDAO.findUser(textLogin.getText(), CriptoMD5.getMD5(textPassword.getText()));
+        if(p.getSenha().equals(CriptoMD5.getMD5(textPassword.getText()))){
+            if(p.getEmail().equals(textLogin.getText())){
+            inicialTela inicial = new inicialTela();
+            inicial.setVisible(true);
+            }
+        }
+        } catch(NullPointerException a){
+         JOptionPane.showMessageDialog(null, "Usuário e senha incorretos ou sem cadastro");
+        }
+         
+    }//GEN-LAST:event_buttonLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,7 +255,7 @@ public class loginTela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField textLogin;
+    private javax.swing.JTextField textPassword;
     // End of variables declaration//GEN-END:variables
 }
