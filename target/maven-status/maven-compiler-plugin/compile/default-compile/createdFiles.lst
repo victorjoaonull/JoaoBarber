@@ -8,8 +8,9 @@ com\mycompany\view\loginTela$2.class
 com\mycompany\view\loginTela.class
 com\mycompany\view\cadastroTela$2.class
 com\mycompany\view\inicialTela$1.class
+com\mycompany\view\inicialTela$2.class
 com\mycompany\controller\PessoaDAO.class
-com\mycompany\view\loginTela$4.class
+com\mycompany\model\Usuario.class
 com\mycompany\view\loginTela$3.class
 com\mycompany\view\cadastroTela.class
 com\mycompany\model\Pessoa.class

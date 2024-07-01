@@ -3,6 +3,7 @@ package com.mycompany.view;
 import com.mycompany.controller.CriptoMD5;
 import com.mycompany.controller.PessoaDAO;
 import com.mycompany.model.Pessoa;
+import com.mycompany.model.Usuario;
 import javax.swing.JOptionPane;
 
 
@@ -18,17 +19,28 @@ public class loginTela extends javax.swing.JFrame {
     public loginTela() {
         initComponents();
     }
-
+    public void logar(){
+        Usuario u;
+        try{
+        u = PessoaDAO.findUser(textLogin.getText(), CriptoMD5.getMD5(textPassword.getText()));
+        if(u.getSenha().equals(CriptoMD5.getMD5(textPassword.getText()))){
+            if(u.getEmail().equals(textLogin.getText())){
+            inicialTela inicial = new inicialTela();
+            inicial.setVisible(true);
+                System.out.println("Teste ID: " + u.getId_pessoa());
+            }
+        }
+        } catch(NullPointerException a){
+         JOptionPane.showMessageDialog(null, "Usuário e senha incorretos ou sem cadastro");
+        }
+         
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        buttonCreateAcc = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        buttonLogin = new javax.swing.JButton();
+        buttonAcess = new javax.swing.JButton();
         textLogin = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
@@ -40,74 +52,10 @@ public class loginTela extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel1.setForeground(new java.awt.Color(102, 102, 255));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        buttonCreateAcc.setText("Criar conta");
-        buttonCreateAcc.addActionListener(new java.awt.event.ActionListener() {
+        buttonAcess.setText("Acessar");
+        buttonAcess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCreateAccActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Novo Login");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel6.setText("BEM VINDO");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(buttonCreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(449, 449, 449))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(248, 248, 248)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(33, 33, 33)
-                .addComponent(buttonCreateAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        buttonLogin.setText("Acessar");
-        buttonLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonLoginActionPerformed(evt);
+                buttonAcessActionPerformed(evt);
             }
         });
 
@@ -132,12 +80,11 @@ public class loginTela extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(buttonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonAcess, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(87, 87, 87))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -159,7 +106,6 @@ public class loginTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel4)
@@ -176,7 +122,7 @@ public class loginTela extends javax.swing.JFrame {
                     .addComponent(jCheckBox1)
                     .addComponent(jLabel1))
                 .addGap(12, 12, 12)
-                .addComponent(buttonLogin)
+                .addComponent(buttonAcess)
                 .addGap(17, 17, 17))
         );
 
@@ -187,26 +133,9 @@ public class loginTela extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void buttonCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCreateAccActionPerformed
-        cadastroTela cadastro = new cadastroTela();
-        cadastro.setVisible(true);
-    }//GEN-LAST:event_buttonCreateAccActionPerformed
-
-    private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
-        try{
-        Pessoa p = null; 
-        p = PessoaDAO.findUser(textLogin.getText(), CriptoMD5.getMD5(textPassword.getText()));
-        if(p.getSenha().equals(CriptoMD5.getMD5(textPassword.getText()))){
-            if(p.getEmail().equals(textLogin.getText())){
-            inicialTela inicial = new inicialTela();
-            inicial.setVisible(true);
-            }
-        }
-        } catch(NullPointerException a){
-         JOptionPane.showMessageDialog(null, "Usuário e senha incorretos ou sem cadastro");
-        }
-         
-    }//GEN-LAST:event_buttonLoginActionPerformed
+    private void buttonAcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAcessActionPerformed
+        logar();
+    }//GEN-LAST:event_buttonAcessActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,17 +173,12 @@ public class loginTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCreateAcc;
-    private javax.swing.JButton buttonLogin;
+    private javax.swing.JButton buttonAcess;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField textLogin;
     private javax.swing.JTextField textPassword;
     // End of variables declaration//GEN-END:variables

@@ -1,9 +1,9 @@
 package com.mycompany.controller;
 import com.mycompany.model.Pessoa;
+import com.mycompany.model.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
-import java.util.List;
 
 public class PessoaDAO {
     public static void registerUserDAO(Pessoa registerPerson){
@@ -21,16 +21,40 @@ public class PessoaDAO {
         em.getTransaction().commit();
         JPAUtil.closeEtityManager();
     }
-    public static Pessoa findUser(String user, String password) {
+    
+    public static Usuario findUser(String user, String password) {
+    EntityManager manager = JPAUtil.getEntityManager();
+    Query query;
+    Usuario u;
+    Pessoa p;
+    try {
+        query = manager.createQuery("SELECT u FROM usuario u WHERE u.email =:email AND u.senha =:password");
+        query.setParameter("email", user);
+        query.setParameter("password", password);
+        u = (Usuario) query.getSingleResult();
+        u.ListInfoUser();
+
+        
+        JPAUtil.closeEtityManager();
+        return u;
+    } catch (IllegalStateException e) {
+        e.printStackTrace();
+    } catch (NoResultException noResultException) {
+    }
+        return null;
+    
+}
+    
+    public static Pessoa findPersonByID(int id) {
     EntityManager manager = JPAUtil.getEntityManager();
     Query query = null;
     Pessoa p = null;
     try {
-        query = manager.createQuery("SELECT m FROM pessoa m where m.email =:email AND m.senha =:password");
-        query.setParameter("email", user);
-        query.setParameter("password", password);
+        query = manager.createQuery("SELECT p FROM pessoa p where p.id =:id");
+        query.setParameter("id", id);
         p = (Pessoa) query.getSingleResult();
-        System.out.println(p.getSenha());
+
+        
         JPAUtil.closeEtityManager();
         return p;
     } catch (IllegalStateException e) {
@@ -40,4 +64,5 @@ public class PessoaDAO {
         return null;
     
 }
+    
 }

@@ -10,86 +10,57 @@ public class Pessoa {
     @Id
     @Column(name="ID_PESSOA")
     private int id;
-    @Column(name="NOME")
+    @Column(name="NOME_PESSOA")
     private String nome;
-    @Column(name="SOBRENOME")
-    private String sobrenome;
-    @Column(name="CPF")
+    @Column(name="CPF_PESSOA")
     private long cpf;
-    @Column(name="NASCIMENTO")
-    private String nascimento;
-    @Column(name="SENHA")
-    private String senha;
-    @Column(name="SEXO")
-    private String sexo;
-    @Column(name="CELULAR")
+    @Column(name="CEL_PESSOA")
     private long celular;
-    @Column(name="EMAIL")
-    private String email;
+    @Column(name="NASCIMENTO_PESSOA")
+    private String nascimento;
+
+    public int getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
     }
 
     public long getCpf() {
         return cpf;
     }
 
-    public String getNascimento() {
-        return nascimento;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
     public long getCelular() {
         return celular;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
     public void setCpf(long cpf) {
         this.cpf = cpf;
+    }
+    
+
+    public void setCelular(long celular) {
+        this.celular = celular;
     }
 
     public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public void setCelular(long celular) {
-        this.celular = celular;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    
     
     public String formataCPF(String cpf){
         String cpfFormatado = null;
@@ -100,5 +71,13 @@ public class Pessoa {
         return cpfFormatado;
     }
         return cpfFormatado;
-} 
+}
+    public void ListInfoUser(){
+        System.out.println("Listando informações: ");
+        System.out.println("ID Pessoa: " + id);
+        System.out.println("Pessoa. nome: " + nome);
+        System.out.println("Pessoa. cpf: " + cpf);
+        System.out.println("Pessoa. celular: " + celular);
+        System.out.println("Pessoa. nascimento: " + nascimento);
+    }
 }

@@ -224,43 +224,7 @@ public class cadastroTela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
-        try{
-        //recebe variaveis escritas para variaves passaveis para set
-        Pessoa registerPerson = new Pessoa();
-        String name = textName.getText();
-        String surname = textSurname.getText();
-        String sexo = textSexo.getSelectedItem().toString();
-        String nasc = textNasc.getText();
-        String email = textEmail.getText();
-        String password = CriptoMD5.getMD5(textPassword.getText());
-        String confirmPassword = CriptoMD5.getMD5(textConfirmPassword.getText());
-        String confirmEmail = textEmail.getText();
-        //verifica se emails e senha são iguais
-        
-        if(email.equals(confirmEmail)){
-            registerPerson.setEmail(email);
-        } else {
-            JOptionPane.showMessageDialog(null, "Os emails não coincidem");
-        } 
-        
-        if(password.equals(confirmPassword)){
-            registerPerson.setSenha(password);
-        } else {
-            JOptionPane.showMessageDialog(null, "As senhas não coincidem");
-        }
-        
-        registerPerson.setNome(name);
-        registerPerson.setSobrenome(surname);
-        registerPerson.setCpf(Long.parseLong(textCPF.getText()));
-        registerPerson.setSexo(sexo);
-        registerPerson.setCelular(Long.parseLong(textTel.getText()));
-        registerPerson.setNascimento(nasc);
-        PessoaDAO.registerUserDAO(registerPerson);
-        
-        } catch(NumberFormatException a){
-            JOptionPane.showMessageDialog(null, "Digite apenas números nas opções CPF e Celular");
-        }
-        
+ 
     }//GEN-LAST:event_buttonRegisterActionPerformed
 
     private void buttonDisposeTologinTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDisposeTologinTelaActionPerformed
