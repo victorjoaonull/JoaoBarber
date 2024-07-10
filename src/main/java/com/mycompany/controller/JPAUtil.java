@@ -11,10 +11,8 @@ public class JPAUtil {
     public static EntityManager getEntityManager() {
         if(fabrica == null || !fabrica.isOpen())
             fabrica = Persistence.createEntityManagerFactory(persistenceUnit);
-            System.out.println("Conectado");
         if(em == null || !em.isOpen()) //cria se em nulo ou se o entity manager foi fechado
             em = fabrica.createEntityManager();
-            System.out.println("Conectado");
         return em;
     }
     

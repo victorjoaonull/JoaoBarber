@@ -4,6 +4,7 @@ import com.mycompany.model.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import java.util.List;
 
 public class PessoaDAO {
     public static void registerUserDAO(Pessoa registerPerson){
@@ -63,6 +64,43 @@ public class PessoaDAO {
     }
         return null;
     
+
+   
 }
+    public static List<Pessoa> findPersons() {
+    EntityManager manager = JPAUtil.getEntityManager();
+    Query query = null;
+    List<Pessoa> p;
+    try {
+        query = manager.createQuery("SELECT p FROM pessoa p");
+        p = query.getResultList();
+
+        
+        JPAUtil.closeEtityManager();
+        return p;
+    } catch (IllegalStateException e) {
+        e.printStackTrace();
+    } catch (NoResultException noResultException) {
+    }
+        return null;
     
+} 
+   public static List<Usuario> findUsers() {
+    EntityManager manager = JPAUtil.getEntityManager();
+    Query query = null;
+    List<Usuario> u;
+    try {
+        query = manager.createQuery("SELECT u FROM usuario u");
+        u = query.getResultList();
+
+        
+        JPAUtil.closeEtityManager();
+        return u;
+    } catch (IllegalStateException e) {
+        e.printStackTrace();
+    } catch (NoResultException noResultException) {
+    }
+        return null;
+    
+}  
 }

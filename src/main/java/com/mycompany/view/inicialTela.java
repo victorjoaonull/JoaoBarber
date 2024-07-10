@@ -4,19 +4,54 @@
  */
 package com.mycompany.view;
 
+import com.mycompany.controller.PessoaDAO;
+import com.mycompany.model.Pessoa;
+import com.mycompany.model.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author bispo
  */
 public class inicialTela extends javax.swing.JFrame {
-
+    DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form inicialTela
      */
     public inicialTela() {
         initComponents();
+        montTable();
     }
-
+    
+    public void montTable(){
+        modelo.addColumn("Nome");
+        modelo.addColumn("CPF");
+        modelo.addColumn("Celular");
+        modelo.addColumn("Nascimento");
+        modelo.addColumn("Email");
+        modelo.addColumn("Tipo Usuário");
+        List<Pessoa> p = PessoaDAO.findPersons();
+        Pessoa p2;
+        List<Usuario> u = PessoaDAO.findUsers();
+        Usuario u2;
+        for(int i = 0; i < u.size(); i++){
+                u2 = u.get(i);
+                    p2 = p.get(i);
+                    if(u2.getId_pessoa() == p2.getId()){
+                        modelo.addRow(new Object[]{
+                        p2.getNome(),
+                        p2.getCpf(),
+                        p2.getCelular(),
+                        p2.getNascimento(),
+                        u2.getEmail(),
+                        u2.getTipo()
+                    });
+                }
+                
+            }
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,6 +70,7 @@ public class inicialTela extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setModel(modelo);
         jScrollPane1.setViewportView(jTable1);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
