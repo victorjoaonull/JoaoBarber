@@ -15,7 +15,7 @@ public class Usuario {
     @Column(name="SENHA_USUARIO")
     private String senha;
     @Column(name="TIPO_USUARIO")
-    private String tipo;
+    private int tipo;
     
 
     public int getId() {
@@ -34,7 +34,7 @@ public class Usuario {
         return senha;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
@@ -42,8 +42,8 @@ public class Usuario {
         this.id = id;
     }
 
-    public void setId_pessoa(Pessoa pessoa) {
-        this.id_pessoa = pessoa.getId();
+    public void setId_pessoa(int id_pessoa) {
+        this.id_pessoa = id_pessoa;
     }
 
     public void setEmail(String email) {
@@ -53,20 +53,22 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    
     //precisar passar valor númerico pois no banco é registrado com números ao invés de frases e cabo ao programa traduzir
-    public void setTipo(int tipo) {
-        if(tipo == 1){
-            this.tipo = "Cliente n/cadastrado";
-        } else if(tipo == 2){
-            this.tipo = "Cliente cadastrado";
-        } else if(tipo == 3){
-            this.tipo = "Funcionário";
-        } else if(tipo == 4){
-            this.tipo = "Supervisor";
-        }  else if(tipo == 5){
-            this.tipo = "Admin";
+    public void setTipo(String tipo) {
+        if(tipo.equals("Cliente n/cadastrado")){
+            this.tipo = 1;
+        } else if(tipo.equals("Cliente")){
+            this.tipo = 2;
+        } else if(tipo.equals("Funcionário")){
+            this.tipo = 3;
+        } else if(tipo.equals("Supervisor")){
+            this.tipo = 4;
+        }else if(tipo.equals("SuperADMIN")){
+            this.tipo = 5;
         }
-        
+
     }
     
     public void ListInfoUser(){
@@ -75,6 +77,7 @@ public class Usuario {
         System.out.println("Usuário. email: " + email);
         System.out.println("Usuário. senha: " + senha);
         System.out.println("Usuário. tipo: " + tipo);
+        System.out.println("Usuário. tipo user: " + id_pessoa);
     }
     
     

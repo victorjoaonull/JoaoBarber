@@ -57,7 +57,9 @@ public class Pessoa {
     }
 
     public void setNascimento(String nascimento) {
-        this.nascimento = nascimento;
+        String nasc[] = nascimento.split("/");
+        String nascFormated = nasc[2] + "-" + nasc[1] + "-" + nasc[0];
+        this.nascimento = nascFormated;
     }
 
     
@@ -71,6 +73,10 @@ public class Pessoa {
         return cpfFormatado;
     }
         return cpfFormatado;
+}
+    public String formatName(String name, String surname){
+        String nameSurname = name +" "+ surname;
+        return nameSurname;
 }
     public void ListInfoUser(){
         System.out.println("Listando informações: ");

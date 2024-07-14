@@ -5,9 +5,21 @@
 package com.mycompany.view;
 
 import com.mycompany.controller.PessoaDAO;
+import com.mycompany.controller.UsuarioDAO;
 import com.mycompany.model.Pessoa;
 import com.mycompany.model.Usuario;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.HeadlessException;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,41 +27,55 @@ import javax.swing.table.DefaultTableModel;
  * @author bispo
  */
 public class inicialTela extends javax.swing.JFrame {
-    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel modeloTela = new DefaultTableModel();
+    Pessoa userTela;
     /**
      * Creates new form inicialTela
      */
     public inicialTela() {
         initComponents();
-        montTable();
+        montTable(modeloTela);
+        
+        
+    }
+
+
+    public inicialTela(Pessoa userTela) {
+        this.userTela = userTela;
+        initComponents();
+        montTable(modeloTela);
+        
     }
     
-    public void montTable(){
+    public void montTable(DefaultTableModel modelo){
         modelo.addColumn("Nome");
         modelo.addColumn("CPF");
         modelo.addColumn("Celular");
         modelo.addColumn("Nascimento");
         modelo.addColumn("Email");
         modelo.addColumn("Tipo Usuário");
-        List<Pessoa> p = PessoaDAO.findPersons();
-        Pessoa p2;
-        List<Usuario> u = PessoaDAO.findUsers();
+        labelName.setText(userTela.getNome());
+        
+        
+        List<Usuario> u = UsuarioDAO.findUsers();
         Usuario u2;
+        Pessoa p;
         for(int i = 0; i < u.size(); i++){
                 u2 = u.get(i);
-                    p2 = p.get(i);
-                    if(u2.getId_pessoa() == p2.getId()){
+                    p = PessoaDAO.findPersonByID(u2.getId_pessoa());
+                    if(u2.getId_pessoa() == p.getId()){
                         modelo.addRow(new Object[]{
-                        p2.getNome(),
-                        p2.getCpf(),
-                        p2.getCelular(),
-                        p2.getNascimento(),
+                        p.getNome(),
+                        p.getCpf(),
+                        p.getCelular(),
+                        p.getNascimento(),
                         u2.getEmail(),
                         u2.getTipo()
                     });
                 }
                 
             }
+        jTable1.setModel(modelo);
         }
     
     /**
@@ -67,19 +93,67 @@ public class inicialTela extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        registerUser = new javax.swing.JButton();
+        labelWelcome = new javax.swing.JLabel();
+        labelName = new javax.swing.JLabel();
+        updateUser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(modelo);
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTable1MouseEntered(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTextField1MouseEntered(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Pesquisar");
+
+        registerUser.setText("Registrar");
+        registerUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerUserActionPerformed(evt);
+            }
+        });
+
+        labelWelcome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelWelcome.setText("Olá,");
+
+        labelName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelName.setText("null");
+        labelName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                labelNameFocusGained(evt);
+            }
+        });
+        labelName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelNameMouseEntered(evt);
+            }
+        });
+
+        updateUser.setText("Atualizar");
+        updateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -88,41 +162,54 @@ public class inicialTela extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(registerUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(updateUser))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(labelWelcome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelName)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelWelcome)
+                    .addComponent(labelName))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(registerUser)
+                    .addComponent(updateUser))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -131,6 +218,40 @@ public class inicialTela extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void registerUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerUserActionPerformed
+        cadastroTela cadastro = new cadastroTela();
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_registerUserActionPerformed
+
+    private void jTextField1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseEntered
+        
+    }//GEN-LAST:event_jTextField1MouseEntered
+
+    private void labelNameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNameMouseEntered
+        
+    }//GEN-LAST:event_labelNameMouseEntered
+
+    private void labelNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_labelNameFocusGained
+
+    }//GEN-LAST:event_labelNameFocusGained
+
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+        
+    }//GEN-LAST:event_jTable1FocusGained
+
+    private void jTable1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseEntered
+        DefaultTableModel modeloTelaReset = new DefaultTableModel();
+        montTable(modeloTelaReset);
+    }//GEN-LAST:event_jTable1MouseEntered
+
+    private void updateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserActionPerformed
+        if(jTable1.getSelectedColumn() == 1){
+            long id = (long) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+            System.out.println("valor" + id);
+        } else
+            JOptionPane.showMessageDialog(null, "Selecione o CPF da pessoa que deseja atualizar");
+    }//GEN-LAST:event_updateUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,5 +295,9 @@ public class inicialTela extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelWelcome;
+    private javax.swing.JButton registerUser;
+    private javax.swing.JButton updateUser;
     // End of variables declaration//GEN-END:variables
 }

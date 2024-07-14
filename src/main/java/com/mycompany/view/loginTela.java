@@ -2,6 +2,7 @@ package com.mycompany.view;
 
 import com.mycompany.controller.CriptoMD5;
 import com.mycompany.controller.PessoaDAO;
+import com.mycompany.controller.UsuarioDAO;
 import com.mycompany.model.Pessoa;
 import com.mycompany.model.Usuario;
 import javax.swing.JOptionPane;
@@ -21,17 +22,18 @@ public class loginTela extends javax.swing.JFrame {
     }
     public void logar(){
         Usuario u;
+        Pessoa p;
         try{
-        u = PessoaDAO.findUser(textLogin.getText(), CriptoMD5.getMD5(textPassword.getText()));
+        u = UsuarioDAO.findUserAndPassword(textLogin.getText(), CriptoMD5.getMD5(textPassword.getText()));
+        p = PessoaDAO.findPersonByID(u.getId_pessoa());
         if(u.getSenha().equals(CriptoMD5.getMD5(textPassword.getText()))){
             if(u.getEmail().equals(textLogin.getText())){
-            inicialTela inicial = new inicialTela();
+            inicialTela inicial = new inicialTela(p);
             inicial.setVisible(true);
-                System.out.println("Teste ID: " + u.getId_pessoa());
             }
         }
         } catch(NullPointerException a){
-         JOptionPane.showMessageDialog(null, "Usuário e senha incorretos ou sem cadastro");
+         JOptionPane.showMessageDialog(null, "Usuário e senha incorretos ou sem cadastro" + "\n" + a.getMessage());
         }
          
     }

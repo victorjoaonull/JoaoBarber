@@ -6,7 +6,9 @@ package com.mycompany.view;
 
 import com.mycompany.controller.CriptoMD5;
 import com.mycompany.controller.PessoaDAO;
+import com.mycompany.controller.UsuarioDAO;
 import com.mycompany.model.Pessoa;
+import com.mycompany.model.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,32 @@ public class cadastroTela extends javax.swing.JFrame {
      */
     public cadastroTela() {
         initComponents();
+    }
+    
+    public void registrar(){
+        Usuario u = new Usuario();
+        Pessoa p = new Pessoa();
+        
+        
+        p.setNome(p.formatName(textName.getText(), textSurname.getText()));
+        p.setCpf(Long.parseLong(textCPF.getText()));
+        p.setNascimento(textNasc.getText());
+        p.setCelular(Long.parseLong(textTel.getText()));
+        PessoaDAO.registerPersonDAO(p);
+        p = PessoaDAO.findPersonsForUser(p.getNome(), String.valueOf(p.getCpf()), String.valueOf(p.getCelular()), p.getNascimento());
+        
+        u.setId_pessoa(p.getId());
+        u.setEmail(textEmail.getText());
+        u.setSenha(textPassword.getText());
+        u.setTipo((String) textType.getSelectedItem());
+        UsuarioDAO.registerUserDAO(u);
+        
+        JOptionPane.showMessageDialog(null, "Usuário foi criado com sucesso");
+        
+        
+        
+        
+        
     }
 
     /**
@@ -39,7 +67,7 @@ public class cadastroTela extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         textCPF = new javax.swing.JTextField();
-        textSexo = new javax.swing.JComboBox<>();
+        textType = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         textNasc = new javax.swing.JFormattedTextField();
@@ -70,9 +98,14 @@ public class cadastroTela extends javax.swing.JFrame {
 
         jLabel3.setText("CPF:");
 
-        textSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Prefiro não dizer", "Femino" }));
+        textType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Funcionário", "Supervisor", "SuperADMIN" }));
+        textType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTypeActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Sexo:");
+        jLabel4.setText("Tipo:");
 
         jLabel5.setText("Data de Nascimento:");
 
@@ -134,7 +167,7 @@ public class cadastroTela extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(textType, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(textConfirmPassword, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(textPassword, javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +211,7 @@ public class cadastroTela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -224,7 +257,7 @@ public class cadastroTela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegisterActionPerformed
- 
+        registrar();
     }//GEN-LAST:event_buttonRegisterActionPerformed
 
     private void buttonDisposeTologinTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDisposeTologinTelaActionPerformed
@@ -234,6 +267,10 @@ public class cadastroTela extends javax.swing.JFrame {
     private void textConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textConfirmPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textConfirmPasswordActionPerformed
+
+    private void textTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,8 +328,8 @@ public class cadastroTela extends javax.swing.JFrame {
     private javax.swing.JTextField textName;
     private javax.swing.JFormattedTextField textNasc;
     private javax.swing.JPasswordField textPassword;
-    private javax.swing.JComboBox<String> textSexo;
     private javax.swing.JTextField textSurname;
     private javax.swing.JTextField textTel;
+    private javax.swing.JComboBox<String> textType;
     // End of variables declaration//GEN-END:variables
 }
